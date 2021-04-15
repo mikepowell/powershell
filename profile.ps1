@@ -1,16 +1,14 @@
 #Requires -Version 7
 
-# Version 1.0.1
+# Version 1.1.0
 
 # check if newer version
 $gitUrl = "https://raw.githubusercontent.com/mikepowell/powershell/main/profile.ps1"
-$latestVersionFile = [System.IO.Path]::Combine("$HOME",'.latest_psprofile')
+$latestVersionFile = [System.IO.Path]::Combine("$HOME",'.latest_psprofileversion')
 $versionRegEx = "# Version (?<version>\d+\.\d+\.\d+)"
 
-<#
 $null = Start-ThreadJob -Name "Get version profile.ps1 from github" -ArgumentList $gitUrl, $latestVersionFile, $versionRegEx -ScriptBlock {
   param ($gitUrl, $latestVersionFile, $versionRegEx)
-#>
   try {
     $profileContent = (Invoke-WebRequest $gitUrl -ErrorAction Stop).Content
 
@@ -24,7 +22,7 @@ $null = Start-ThreadJob -Name "Get version profile.ps1 from github" -ArgumentLis
     # we can hit rate limit issue with GitHub since we're using anonymous
     Write-Verbose -Verbose "Was not able to download profile.ps1 from GitHub to check for newer version."
   }
-
+}
 
 if ([System.IO.File]::Exists($latestVersionFile)) {
   $latestVersion = [System.IO.File]::ReadAllText($latestVersionFile)
@@ -54,9 +52,11 @@ if ([System.IO.File]::Exists($latestVersionFile)) {
   }
 }
 
-if ((Get-Module PSReadLine).Version -lt 2.1) {
-  throw "Profile requires PSReadLine 2.1+"
-}
+Import-Module 'posh-git'
+Import-Module 'Terminal-Icons'
+Import-Module 'oh-my-posh'
+
+Set-PoshPrompt -Theme "$HOME\.oh-my-posh.json"
 
 # setup psdrives
 if (!(Test-Path git:)) {
