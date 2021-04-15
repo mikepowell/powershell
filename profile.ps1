@@ -1,9 +1,9 @@
 #Requires -Version 7
 
-# Version 1.0.0
+# Version 1.0.1
 
 # check if newer version
-$gitUrl = "https://https://raw.githubusercontent.com/mikepowell/powershell/main/profile.ps1"
+$gitUrl = "https://raw.githubusercontent.com/mikepowell/powershell/main/profile.ps1"
 $latestVersionFile = [System.IO.Path]::Combine("$HOME",'.latest_psprofile')
 $versionRegEx = "# Version (?<version>\d+\.\d+\.\d+)"
 
