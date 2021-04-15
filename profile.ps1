@@ -1,6 +1,6 @@
 #Requires -Version 7
 
-# Version 1.1.0
+# Version 1.1.1
 
 # check if newer version
 $gitUrl = "https://raw.githubusercontent.com/mikepowell/powershell/main/profile.ps1"
@@ -53,7 +53,7 @@ if ([System.IO.File]::Exists($latestVersionFile)) {
 }
 
 Import-Module 'posh-git'
-Import-Module 'Terminal-Icons'
+# Import-Module 'Terminal-Icons'
 Import-Module 'oh-my-posh'
 
 Set-PoshPrompt -Theme "$HOME\.oh-my-posh.json"
